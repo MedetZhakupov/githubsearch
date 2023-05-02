@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.medetzhakupov.githubsearch.data.remote.GithubSearchRepository
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     SearchScreen(
-                        viewState = viewModel.viewState.collectAsState().value,
+                        viewState = viewModel.viewState.collectAsStateWithLifecycle().value,
                         onSearch = { viewModel.searchUser(it) })
                 }
             }
