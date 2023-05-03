@@ -1,6 +1,7 @@
-package dev.medetzhakupov.githubsearch.data.remote
+package dev.medetzhakupov.githubsearch.data
 
 import dev.medetzhakupov.githubsearch.CoroutinesTestRule
+import dev.medetzhakupov.githubsearch.data.remote.GithubApiService
 import dev.medetzhakupov.githubsearch.data.remote.model.GithubUser
 import dev.medetzhakupov.githubsearch.data.remote.model.SearchResult
 import io.mockk.coEvery
@@ -24,7 +25,7 @@ internal class GithubSearchRepositoryTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     private val apiService: GithubApiService = mockk()
-    private val repository = GithubSearchRepository(apiService)
+    private val repository: GithubSearchRepository = GithubSearchRepositoryImpl(apiService)
 
     @Test
     fun `search user`() = runTest {
