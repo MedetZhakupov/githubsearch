@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GithubSearch</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="searche_by_username">Search by username</string>
+    <string name="clear">CLEAR</string>
+    <string name="not_found">Not found</string>
+    <string name="search_github_users">Search github users</string>
+    <string name="error">Something went wrong</string>
 </resources>

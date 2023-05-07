@@ -33,7 +33,7 @@ internal class GithubSearchRepositoryTest {
         val searchResult = SearchResult(listOf(githubUser))
         coEvery { apiService.searchUsers(any()) } returns searchResult
 
-        assertEquals(Result.success(searchResult.items), repository.search("user").first())
+        assertEquals(Result.Success(searchResult.items), repository.search("user").first())
     }
 
 
@@ -44,6 +44,6 @@ internal class GithubSearchRepositoryTest {
         val error = HttpException(response)
         coEvery { apiService.searchUsers(any()) } throws error
 
-        assertTrue(repository.search("user").first().isFailure)
+        assertTrue(repository.search("user").first().isSuccess().not())
     }
 }

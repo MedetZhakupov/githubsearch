@@ -11,11 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import dev.medetzhakupov.githubsearch.data.remote.GithubSearchRepository
+import dev.medetzhakupov.githubsearch.data.GithubSearchRepositoryImpl
+import dev.medetzhakupov.githubsearch.data.SearchHistoryRepositoryImpl
+import dev.medetzhakupov.githubsearch.data.cache.SearchHistoryRealm
 import dev.medetzhakupov.githubsearch.data.remote.apiService
 import dev.medetzhakupov.githubsearch.ui.search.SearchScreen
 import dev.medetzhakupov.githubsearch.ui.search.SearchViewModel
 import dev.medetzhakupov.githubsearch.ui.theme.GithubSearchTheme
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,20 +29,30 @@ class MainActivity : ComponentActivity() {
                 viewModelFactory {
                     initializer {
                         SearchViewModel(
-                            GithubSearchRepository(apiService)
+                            GithubSearchRepositoryImpl(apiService),
+                            SearchHistoryRepositoryImpl(
+                                Realm.open(
+                                    RealmConfiguration.create(
+                                        schema = setOf(
+                                            SearchHistoryRealm::class
+                                        )
+                                    )
+                                )
+                            )
                         )
                     }
                 }
             }
 
             GithubSearchTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     SearchScreen(
                         viewState = viewModel.viewState.collectAsStateWithLifecycle().value,
+                        onQueryChange = { viewModel.onSearchTextChange(it) },
+                        onClearRecentSearches = { viewModel.onClearRecentSearches() },
                         onSearch = { viewModel.searchUser(it) })
                 }
             }

@@ -11,8 +11,8 @@ class GithubSearchRepositoryImpl(private val apiService: GithubApiService) :
 
     override fun search(username: String): Flow<Result<List<GithubUser>>> = flow {
         val result = apiService.searchUsers(username)
-        emit(Result.success(result.items))
+        emit(Result.Success(result.items) as Result<List<GithubUser>>)
     }.catch { error ->
-        emit(Result.failure(error))
+        emit(Result.Failure(error))
     }
 }
