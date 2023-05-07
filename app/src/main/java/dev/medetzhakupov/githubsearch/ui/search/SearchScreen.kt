@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
@@ -13,6 +15,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isContainer
@@ -33,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil.compose.AsyncImage
 import dev.medetzhakupov.githubsearch.R
 import dev.medetzhakupov.githubsearch.ui.search.SearchViewState.ScreenState
 
@@ -85,9 +90,24 @@ fun SearchScreen(
                     )
                 ) {
                     items(viewState.users.size) { idx ->
-                        ListItem(
-                            headlineContent = { Text(text = viewState.users[idx].login) }
-                        )
+                        viewState.users[idx].run {
+                            ListItem(
+                                modifier = Modifier.height(100.dp),
+                                leadingContent = {
+                                    AsyncImage(
+                                        modifier = Modifier.clip(CircleShape),
+                                        model = avatarUrl,
+                                        contentDescription = null
+                                    )
+                                },
+                                headlineContent = {
+                                    Text(
+                                        text = login,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
