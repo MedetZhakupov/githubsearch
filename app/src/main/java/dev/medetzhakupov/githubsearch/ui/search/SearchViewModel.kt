@@ -2,6 +2,7 @@ package dev.medetzhakupov.githubsearch.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.medetzhakupov.githubsearch.data.GithubSearchRepository
 import dev.medetzhakupov.githubsearch.data.Result
 import dev.medetzhakupov.githubsearch.data.SearchHistoryRepository
@@ -10,8 +11,10 @@ import dev.medetzhakupov.githubsearch.ui.search.SearchViewState.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val githubSearchRepository: GithubSearchRepository,
     private val searchHistoryRepository: SearchHistoryRepository,
 ) : ViewModel() {

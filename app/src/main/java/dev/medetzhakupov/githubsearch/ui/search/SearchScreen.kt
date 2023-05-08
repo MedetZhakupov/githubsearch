@@ -46,7 +46,8 @@ fun SearchScreen(
     viewState: SearchViewState,
     onQueryChange: (String) -> Unit,
     onClearRecentSearches: () -> Unit,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
+    navigateToDetail: (followersUrl: String, reposUrl: String) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Search(
@@ -92,7 +93,11 @@ fun SearchScreen(
                     items(viewState.users.size) { idx ->
                         viewState.users[idx].run {
                             ListItem(
-                                modifier = Modifier.height(100.dp),
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .clickable {
+                                        navigateToDetail(followersUrl, reposUrl)
+                                    },
                                 leadingContent = {
                                     AsyncImage(
                                         modifier = Modifier.clip(CircleShape),
