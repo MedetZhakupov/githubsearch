@@ -45,7 +45,7 @@ internal class GithubApiServiceTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test successful search`() = runTest {
-        val searchResult = SearchResult(listOf(GithubUser("login", "avatarUrl", "htmlUrl")))
+        val searchResult = SearchResult(listOf(GithubUser("login", "avatarUrl")))
         val adapter = Moshi.Builder().build().adapter(SearchResult::class.java)
         mockWebServer.enqueue(MockResponse().setBody(adapter.toJson(searchResult)))
 

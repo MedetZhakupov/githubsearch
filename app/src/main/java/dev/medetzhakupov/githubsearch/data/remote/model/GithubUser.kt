@@ -7,9 +7,5 @@ import com.squareup.moshi.JsonClass
 data class GithubUser(
     val login: String,
     @Json(name = "avatar_url")
-    val avatarUrl: String,
-    @Json(name = "followers_url")
-    val followersUrl: String,
-    @Json(name = "repos_url")
-    val reposUrl: String
+    val avatarUrl: String
 )

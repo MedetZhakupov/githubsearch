@@ -29,7 +29,7 @@ internal class GithubSearchRepositoryTest {
 
     @Test
     fun `search user`() = runTest {
-        val githubUser = GithubUser("login", "avatarUrl", "htmlUrl")
+        val githubUser = GithubUser("login", "avatarUrl")
         val searchResult = SearchResult(listOf(githubUser))
         coEvery { apiService.searchUsers(any()) } returns searchResult
 
