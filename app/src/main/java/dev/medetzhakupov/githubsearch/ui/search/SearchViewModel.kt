@@ -22,7 +22,6 @@ class SearchViewModel @Inject constructor(
     private val _viewState = MutableStateFlow<SearchViewState>(ScreenState.Empty)
     val viewState = _viewState.asStateFlow()
 
-
     fun searchUser(query: String) {
         viewModelScope.launch {
             _viewState.value = ScreenState.Loading
